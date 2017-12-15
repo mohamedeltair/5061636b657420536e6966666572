@@ -5,6 +5,7 @@
  */
 package packet.sniffer;
 
+import java.util.ArrayList;
 import org.jnetpcap.packet.JHeader;
 import org.jnetpcap.packet.JHeaderPool;
 import org.jnetpcap.packet.JPacket;
@@ -54,22 +55,26 @@ public class Utilities {
     public static String getHexa(PcapPacket packet) {
         return packet.toHexdump();
     }
-    public static JHeader getStaticLastHeader(JPacket packet) {  
-    return getStaticLastHeader(packet, false);   
+    public static ArrayList<JHeader> getHeaders(JPacket packet) {  
+    return getHeaders(packet, false);   
 }  
   
-    public static JHeader getStaticLastHeader(JPacket packet, boolean payloadOk) {  
+    public static ArrayList<JHeader> getHeaders(JPacket packet, boolean payloadOk) {  
+        ArrayList<JHeader> headers = new ArrayList();
         int last = packet.getHeaderCount() - 1;  
 
         if (!payloadOk && packet.getHeaderIdByIndex(last) == Payload.ID  
             && last > 0) {  
             last--; // We want the last header before payload  
         }  
+        for(int i=0; i<=last; i++) {
+            final JHeader header =  
+                JHeaderPool.getDefault().getHeader(packet.getHeaderIdByIndex(i));  
+            packet.getHeaderByIndex(i, header);  
+            headers.add(header);
+        }
 
-        final JHeader header =  
-            JHeaderPool.getDefault().getHeader(packet.getHeaderIdByIndex(last));  
-        packet.getHeaderByIndex(last, header);  
-
-        return header;  
+        return headers;  
     }  
+    
 }

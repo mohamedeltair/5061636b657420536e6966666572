@@ -86,6 +86,11 @@ public class Main_Controller implements Initializable {
             System.out.println(e.toString());
         }
     }
+    
+    public String check(Object o){
+        if(o == null) return "Protocol doesn't exist";
+        return o.toString();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -97,8 +102,19 @@ public class Main_Controller implements Initializable {
          protC.setCellValueFactory(cellData->cellData.getValue().protocol);
          timeC.setCellValueFactory(cellData->cellData.getValue().time);
                 packets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                    int ind=packets.getSelectionModel().getSelectedIndex();
-                      
+                int ind=packets.getSelectionModel().getSelectedIndex();
+                
+                
+                ethernet.setText(check((Utilities.getEthernet(PacketsHandler.packets.get(ind)))));
+                arp.setText(check(Utilities.getArp(PacketsHandler.packets.get(ind))));
+                ICMP.setText(check(Utilities.getIcmp(PacketsHandler.packets.get(ind))));
+                IP4.setText(check(Utilities.getIp4(PacketsHandler.packets.get(ind))));
+                IP6.setText(check(Utilities.getIp6(PacketsHandler.packets.get(ind))));
+                tcp.setText(check(Utilities.getTcp(PacketsHandler.packets.get(ind))));
+                udp.setText(check(Utilities.getUdp(PacketsHandler.packets.get(ind))));
+                http.setText(check(Utilities.getHttp(PacketsHandler.packets.get(ind))));
+                phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
+                
                 });
     }
     public void addRow(Packet pck){

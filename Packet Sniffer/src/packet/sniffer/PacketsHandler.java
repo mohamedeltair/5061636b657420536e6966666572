@@ -10,9 +10,11 @@ import java.util.Date;
 import java.util.List;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
+import org.jnetpcap.packet.JHeader;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
 import org.jnetpcap.packet.format.FormatUtils;
+import org.jnetpcap.protocol.lan.Ethernet;
 import org.jnetpcap.protocol.network.Ip4;
 import org.jnetpcap.protocol.network.Ip6;
 
@@ -59,6 +61,7 @@ public class PacketsHandler extends Thread {
                     );
                 Ip4 ip4 = Utilities.getIp4(packet);
                 Ip6 ip6 = Utilities.getIp6(packet);
+                Ethernet ethernet = Utilities.getEthernet(packet);
                 String source = "", destination = "";
                 if(ip4!=null) {
                     source = FormatUtils.ip(ip4.source());
@@ -68,12 +71,24 @@ public class PacketsHandler extends Thread {
                     source = FormatUtils.ip(ip6.source());
                     destination = FormatUtils.ip(ip6.destination());
                 }
+                else if(ethernet != null) {
+                    source = FormatUtils.mac(ethernet.source());
+                    destination = FormatUtils.mac(ethernet.destination());
+                }
                 else {
-                    source = "no ip4, ip6";
-                    destination = "no ip4, ip6";
+                    source = "unknown";
+                    destination = "unknown";
+                }
+                ArrayList<JHeader> headers = Utilities.getHeaders(packet);
+                String all = "";
+                for(int i=0; i<headers.size(); i++) {
+                    all+=headers.get(i).getName();
+                    if(i!=headers.size()-1)
+                        all+=", ";
                 }
                 d.addRow(new Packet((count++)+"", new Date(packet.getCaptureHeader().timestampInMillis()).toString(), source, destination,
-                        Utilities.getStaticLastHeader(packet).getName(), packet.getCaptureHeader().wirelen()+"", ""));
+                        headers.get(headers.size()-1).getName(), packet.getCaptureHeader().wirelen()+"", "Protocols involved: "+all));
+                System.out.println(headers.size());
                 packets.add(packet);
             }  
         };  
