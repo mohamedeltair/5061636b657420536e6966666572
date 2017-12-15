@@ -1,4 +1,4 @@
-package packet.sniffer;
+    package packet.sniffer;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -100,6 +100,8 @@ public class Main_Controller {
             window.setScene(interfacesView);
             window.show();
         }
-        catch(Exception e){}
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 }

@@ -32,7 +32,6 @@
             <DropShadow />
          </effect>
          <cursor>
-            <Cursor fx:constant="HAND" />
          </cursor>
       </MenuBar>
       <TitledPane layoutX="9.0" layoutY="44.0" prefHeight="256.0" prefWidth="1046.0" text="Packet List">
