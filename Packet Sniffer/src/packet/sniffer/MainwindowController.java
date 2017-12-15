@@ -25,6 +25,7 @@ import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.lan.Ethernet;
 import org.jnetpcap.protocol.network.Arp;
 import org.jnetpcap.protocol.network.Icmp;
@@ -55,9 +56,6 @@ class inter{
 class Utilities {
     public static int toUnsignedByte(byte val) {
         return (int)(val & 0x000000FF);
-    }
-    public static String getIP(byte[] arr) {
-        return toUnsignedByte(arr[0])+"."+toUnsignedByte(arr[1])+"."+toUnsignedByte(arr[2])+"."+toUnsignedByte(arr[3]);
     }
     public static Http getHttp(PcapPacket packet) {
         return packet.getHeader(new Http());   
@@ -127,8 +125,20 @@ class PacketsHandler extends Thread {
                     user                                  
                     );
                 Ip4 ip4 = Utilities.getIp4(packet);
-                String source = Utilities.getIP(ip4.source());
-                String destination = Utilities.getIP(ip4.destination());
+                Ip6 ip6 = Utilities.getIp6(packet);
+                String source = "", destination = "";
+                if(ip4!=null) {
+                    source = FormatUtils.ip(ip4.source());
+                    destination = FormatUtils.ip(ip4.destination());
+                }
+                else if(ip6!=null) {
+                    source = FormatUtils.ip(ip6.source());
+                    destination = FormatUtils.ip(ip6.destination());
+                }
+                else {
+                    source = "no ip4, ip6";
+                    destination = "no ip4, ip6";
+                }
                 d.addRow(new Packet((count++)+"", "", source, destination, "", "", ""));
             }  
         };  
