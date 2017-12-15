@@ -1,5 +1,6 @@
 package packetsniffer;
 
+import com.jfoenix.controls.JFXButton;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.*;
@@ -79,8 +80,12 @@ public class MainwindowController implements Initializable {
     private TableView<inter> alldevs;
     private ArrayList<Integer> trace=new ArrayList<Integer>();
     @FXML
+    private JFXButton captureID;
     void capture(ActionEvent event) {
-
+        int index = alldevs.getSelectionModel().getSelectedIndex();
+        Stage stage = (Stage) captureID.getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
