@@ -11,6 +11,7 @@ import java.util.List;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.JHeader;
+import org.jnetpcap.packet.Payload;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
 import org.jnetpcap.packet.format.FormatUtils;
@@ -80,15 +81,15 @@ public class PacketsHandler extends Thread {
                     destination = "unknown";
                 }
                 ArrayList<JHeader> headers = Utilities.getHeaders(packet);
+                int last = headers.get(headers.size()-1).getName().equals("Html")?headers.size()-2:headers.size()-1;
                 String all = "";
-                for(int i=0; i<headers.size(); i++) {
+                for(int i=0; i<=last; i++) {
                     all+=headers.get(i).getName();
-                    if(i!=headers.size()-1)
+                    if(i!=last)
                         all+=", ";
                 }
                 d.addRow(new Packet((count++)+"", new Date(packet.getCaptureHeader().timestampInMillis()).toString(), source, destination,
-                        headers.get(headers.size()-1).getName(), packet.getCaptureHeader().wirelen()+"", "Protocols involved: "+all));
-                System.out.println(headers.size());
+                        headers.get(last).getName(), packet.getCaptureHeader().wirelen()+"", "Protocols involved: "+all));
                 packets.add(packet);
             }  
         };  

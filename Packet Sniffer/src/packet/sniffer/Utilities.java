@@ -57,8 +57,7 @@ public class Utilities {
     }
     public static ArrayList<JHeader> getHeaders(JPacket packet) {  
     return getHeaders(packet, false);   
-}  
-  
+    }  
     public static ArrayList<JHeader> getHeaders(JPacket packet, boolean payloadOk) {  
         ArrayList<JHeader> headers = new ArrayList();
         int last = packet.getHeaderCount() - 1;  
