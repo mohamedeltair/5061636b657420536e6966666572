@@ -22,6 +22,11 @@ import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.protocol.lan.Ethernet;
+import org.jnetpcap.protocol.network.Ip4;
+import org.jnetpcap.protocol.tcpip.Http;
+import org.jnetpcap.protocol.tcpip.Tcp;
+import org.jnetpcap.protocol.tcpip.Udp;
 
 /**
  * FXML Controller class
@@ -42,9 +47,11 @@ class inter{
 }
 public class MainwindowController implements Initializable {
     ArrayList<String> devsList = new ArrayList<String>();
+    List<PcapIf> alldevs = new ArrayList<PcapIf>();  
+    StringBuilder errbuf = new StringBuilder(); 
     private void readDevices(){
-        List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
-        StringBuilder errbuf = new StringBuilder(); // For any error msgs  
+        alldevs = new ArrayList<PcapIf>();  
+        errbuf = new StringBuilder(); 
         /*************************************************************************** 
          * First get a list of devices on this system 
          **************************************************************************/  
@@ -77,16 +84,63 @@ public class MainwindowController implements Initializable {
     @FXML
     private TableColumn<inter, String> interfaces;
     @FXML
-    private TableView<inter> alldevs;
+    private TableView<inter> alldevstable;
     private ArrayList<Integer> trace=new ArrayList<Integer>();
     @FXML
     private JFXButton captureID;
     @FXML
     void capture(ActionEvent event) {
-        int index = alldevs.getSelectionModel().getSelectedIndex();
+        int index = alldevstable.getSelectionModel().getSelectedIndex();
         Stage stage = (Stage) captureID.getScene().getWindow();
         // do what you have to do
         stage.close();
+        PcapIf device = alldevs.get(index);
+        int snaplen = 64 * 1024;           // Capture all packets, no trucation  
+        int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
+        int timeout = 10 * 1000;           // 10 seconds in millis  
+        Pcap pcap =  
+            Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);  
+  
+        if (pcap == null) {  
+            System.err.printf("Error while opening device for capture: "  
+                + errbuf.toString());  
+            return;  
+        }  
+  
+        /*************************************************************************** 
+         * Third we create a packet handler which will receive packets from the 
+         * libpcap loop. 
+         **************************************************************************/  
+        PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {  
+  
+            public void nextPacket(PcapPacket packet, String user) {  
+                System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",  
+                    new Date(packet.getCaptureHeader().timestampInMillis()),   
+                    packet.getCaptureHeader().caplen(),  // Length actually captured  
+                    packet.getCaptureHeader().wirelen(), // Original length   
+                    user                                 // User supplied object  
+                    );
+                /*Tcp tcp = packet.getHeader(new Tcp());
+                System.out.println("tcp: "+tcp);
+                Http http = packet.getHeader(new Http());
+                System.out.println("http: "+http);
+                Udp udp = packet.getHeader(new Udp());
+                System.out.println("udp: "+udp);
+                Ip4 ip4 = packet.getHeader(new Ip4());
+                System.out.println("ip4: "+ip4);
+                System.out.println("source, dest: " + getIP(ip4.source()) +", "+
+                getIP(ip4.destination()));
+                Ethernet ethernet = packet.getHeader(new Ethernet());
+                System.out.println("ethernet: "+ethernet);
+                System.out.println("hexa: " + packet.toHexdump());*/
+            }  
+        }; 
+        pcap.loop(pcap.LOOP_INFINATE, jpacketHandler, "");  
+  
+        /*************************************************************************** 
+         * Last thing to do is close the pcap handle 
+         **************************************************************************/  
+        pcap.close();  
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -97,6 +151,6 @@ public class MainwindowController implements Initializable {
        for(int i=0 ; i<devsList.size() ; i++){
            li.add(new inter(devsList.get(i)));
        }
-       alldevs.setItems(li);
+       alldevstable.setItems(li);
     }
 }
