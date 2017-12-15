@@ -1,96 +1,50 @@
 package packet.sniffer;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
 
-public class Main_Controller {
-    private void sniff(){
-        List<PcapIf> alldevs = new ArrayList<PcapIf>(); // Will be filled with NICs  
-        StringBuilder errbuf = new StringBuilder(); // For any error msgs  
-    System.out.println(alldevs);
-        /*************************************************************************** 
-         * First get a list of devices on this system 
-         **************************************************************************/  
-        int r = Pcap.findAllDevs(alldevs, errbuf);  
-        if (r == Pcap.NOT_OK || alldevs.isEmpty()) {  
-            System.err.printf("Can't read list of devices, error is %s", errbuf  
-                .toString());  
-            return;  
-        }  
-  
-        System.out.println("Network devices found:");  
-  
-        int i = 0;  
-        for (PcapIf device : alldevs) {  
-            String description =  
-                (device.getDescription() != null) ? device.getDescription()  
-                    : "No description available";  
-            System.out.printf("#%d: %s [%s]\n", i++, device.getName(), description);  
-        }  
-  
-        PcapIf device = alldevs.get(0); // We know we have atleast 1 device  
-        System.out  
-            .printf("\nChoosing '%s' on your behalf:\n",  
-                (device.getDescription() != null) ? device.getDescription()  
-                    : device.getName());  
-  
-        /*************************************************************************** 
-         * Second we open up the selected device 
-         **************************************************************************/  
-        int snaplen = 64 * 1024;           // Capture all packets, no trucation  
-        int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
-        int timeout = 10 * 1000;           // 10 seconds in millis  
-        Pcap pcap =  
-            Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);  
-  
-        if (pcap == null) {  
-            System.err.printf("Error while opening device for capture: "  
-                + errbuf.toString());  
-            return;  
-        }  
-  
-        /*************************************************************************** 
-         * Third we create a packet handler which will receive packets from the 
-         * libpcap loop. 
-         **************************************************************************/  
-        PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {  
-  
-            public void nextPacket(PcapPacket packet, String user) {  
-  
-                System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",  
-                    new Date(packet.getCaptureHeader().timestampInMillis()),   
-                    packet.getCaptureHeader().caplen(),  // Length actually captured  
-                    packet.getCaptureHeader().wirelen(), // Original length   
-                    user                                 // User supplied object  
-                    );  
-            }  
-        };  
-  
-        /*************************************************************************** 
-         * Fourth we enter the loop and tell it to capture 10 packets. The loop 
-         * method does a mapping of pcap.datalink() DLT value to JProtocol ID, which 
-         * is needed by JScanner. The scanner scans the packet buffer and decodes 
-         * the headers. The mapping is done automatically, although a variation on 
-         * the loop method exists that allows the programmer to sepecify exactly 
-         * which protocol ID to use as the data link type for this pcap interface. 
-         **************************************************************************/  
-        pcap.loop(10, jpacketHandler, "jNetPcap rocks!");  
-  
-        /*************************************************************************** 
-         * Last thing to do is close the pcap handle 
-         **************************************************************************/  
-        pcap.close(); 
-    }
-    
+public class Main_Controller implements Initializable {  
+    ObservableList<Packet> pcks=FXCollections.observableArrayList();
+    @FXML
+    private TableView<Packet> packets;
+    @FXML
+    private TableColumn<Packet, String> numC;
+
+    @FXML
+    private TableColumn<Packet, String> timeC;
+
+    @FXML
+    private TableColumn<Packet, String> sourceC;
+
+    @FXML
+    private TableColumn<Packet, String> destC;
+
+    @FXML
+    private TableColumn<Packet, String> protC;
+
+    @FXML
+    private TableColumn<Packet, String> lengthC;
+
+    @FXML
+    private TableColumn<Packet, String> infoC;
+
     public void showInterfacesWindow(){
         try{
             Stage window = new Stage();
@@ -103,5 +57,23 @@ public class Main_Controller {
         catch(Exception e){
             System.out.println(e.toString());
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+         numC.setCellValueFactory(cellData->cellData.getValue().no);
+         destC.setCellValueFactory(cellData->cellData.getValue().dest);
+         infoC.setCellValueFactory(cellData->cellData.getValue().info);
+         sourceC.setCellValueFactory(cellData->cellData.getValue().source);
+         lengthC.setCellValueFactory(cellData->cellData.getValue().length);
+         protC.setCellValueFactory(cellData->cellData.getValue().protocol);
+         timeC.setCellValueFactory(cellData->cellData.getValue().time);
+    }
+    public void addRow(Packet pck){
+        pcks.add(pck);
+        packets.setItems(pcks);
+    }
+    public void filltable(ArrayList<Packet> pckts){
+        
     }
 }

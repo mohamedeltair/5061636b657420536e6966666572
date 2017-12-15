@@ -20,7 +20,7 @@ public class PacketSniffer extends Application {
         window.setMaxWidth(1070);
         window.setMaxHeight(850);
         window.setTitle("Mini Wireshark");
-        Parent root = FXMLLoader.load(getClass().getResource("PS_View.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
         Scene mainView = new Scene(root);
         window.setScene(mainView);
         window.show();
