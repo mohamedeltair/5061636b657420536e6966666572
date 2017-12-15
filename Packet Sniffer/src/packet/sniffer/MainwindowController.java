@@ -23,6 +23,10 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
+import org.jnetpcap.packet.JHeader;
+import org.jnetpcap.packet.JHeaderPool;
+import org.jnetpcap.packet.JPacket;
+import org.jnetpcap.packet.Payload;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
 import org.jnetpcap.packet.format.FormatUtils;
@@ -51,39 +55,6 @@ class inter{
         this.str=new SimpleStringProperty(str);
     }
     
-}
-
-class Utilities {
-    public static int toUnsignedByte(byte val) {
-        return (int)(val & 0x000000FF);
-    }
-    public static Http getHttp(PcapPacket packet) {
-        return packet.getHeader(new Http());   
-    }
-    public static Tcp getTcp(PcapPacket packet) {
-        return packet.getHeader(new Tcp());   
-    }
-    public static Udp getUdp(PcapPacket packet) {
-        return packet.getHeader(new Udp());   
-    }
-    public static Ip4 getIp4(PcapPacket packet) {
-        return packet.getHeader(new Ip4());   
-    }
-    public static Ip6 getIp6(PcapPacket packet) {
-        return packet.getHeader(new Ip6());   
-    }
-    public static Icmp getIcmp(PcapPacket packet) {
-        return packet.getHeader(new Icmp());   
-    }
-    public static Arp getArp(PcapPacket packet) {
-        return packet.getHeader(new Arp());   
-    }
-    public static Ethernet getEthernet(PcapPacket packet) {
-        return packet.getHeader(new Ethernet());   
-    }
-    public static String getHexa(PcapPacket packet) {
-        return packet.toHexdump();
-    }
 }
 
 
@@ -139,10 +110,11 @@ class PacketsHandler extends Thread {
                     source = "no ip4, ip6";
                     destination = "no ip4, ip6";
                 }
-                d.addRow(new Packet((count++)+"", "", source, destination, "", "", ""));
+                d.addRow(new Packet((count++)+"", new Date(packet.getCaptureHeader().timestampInMillis()).toString(), source, destination,
+                        Utilities.getStaticLastHeader(packet).getName(), packet.getCaptureHeader().wirelen()+"", ""));
             }  
         };  
-        pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, "jNetPcap rocks!");   
+        pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, "");   
         pcap.close();
     }
 }

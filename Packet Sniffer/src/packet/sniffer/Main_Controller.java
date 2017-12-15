@@ -1,5 +1,6 @@
 package packet.sniffer;
 
+import com.jfoenix.controls.JFXTextArea;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +43,33 @@ public class Main_Controller implements Initializable {
     @FXML
     private TableColumn<Packet, String> lengthC;
 
+@FXML
+    private JFXTextArea ethernet;
+
+    @FXML
+    private JFXTextArea arp;
+
+    @FXML
+    private JFXTextArea ICMP;
+
+    @FXML
+    private JFXTextArea IP4;
+
+    @FXML
+    private JFXTextArea IP6;
+
+    @FXML
+    private JFXTextArea tcp;
+
+    @FXML
+    private JFXTextArea udp;
+
+    @FXML
+    private JFXTextArea http;
+
+    @FXML
+    private JFXTextArea phexa;
+    
     @FXML
     private TableColumn<Packet, String> infoC;
 
@@ -68,12 +96,14 @@ public class Main_Controller implements Initializable {
          lengthC.setCellValueFactory(cellData->cellData.getValue().length);
          protC.setCellValueFactory(cellData->cellData.getValue().protocol);
          timeC.setCellValueFactory(cellData->cellData.getValue().time);
+                packets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                    int ind=packets.getSelectionModel().getSelectedIndex();
+                      
+                });
     }
     public void addRow(Packet pck){
         pcks.add(pck);
         packets.setItems(pcks);
     }
-    public void filltable(ArrayList<Packet> pckts){
-        
-    }
+    
 }
