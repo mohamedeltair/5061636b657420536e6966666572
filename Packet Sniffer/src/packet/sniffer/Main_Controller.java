@@ -95,11 +95,13 @@ public class Main_Controller {
         try{
             Stage window = new Stage();
             window.setTitle("Devices List");
-            Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
             Scene interfacesView = new Scene(root);
             window.setScene(interfacesView);
             window.show();
         }
-        catch(Exception e){}
+        catch(Exception e){
+            System.out.println(e.toString());
+        }
     }
 }

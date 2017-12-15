@@ -1,4 +1,4 @@
-package packetsniffer;
+package packet.sniffer;
 
 import com.jfoenix.controls.JFXButton;
 import java.awt.event.KeyEvent;
@@ -144,8 +144,8 @@ public class MainwindowController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       readDevices();
-       System.out.println(devsList.get(0));
+       //readDevices();
+       //System.out.println(devsList.get(0));
        interfaces.setCellValueFactory(cellData-> cellData.getValue().str);
        ObservableList<inter> li=FXCollections.observableArrayList();
        for(int i=0 ; i<devsList.size() ; i++){
