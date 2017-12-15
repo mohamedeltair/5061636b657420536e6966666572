@@ -81,6 +81,7 @@ public class MainwindowController implements Initializable {
     private ArrayList<Integer> trace=new ArrayList<Integer>();
     @FXML
     private JFXButton captureID;
+    @FXML
     void capture(ActionEvent event) {
         int index = alldevs.getSelectionModel().getSelectedIndex();
         Stage stage = (Stage) captureID.getScene().getWindow();
