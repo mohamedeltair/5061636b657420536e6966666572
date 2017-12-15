@@ -52,45 +52,97 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Accordion prefHeight="394.4" prefWidth="1044.8" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                          <panes>
-                            <TitledPane text="Frame Number">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <JFXTextArea fx:id="frameA" editable="false" maxWidth="1022.0" minWidth="1022.0" prefHeight="190.0" prefWidth="1022.0" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane text="Ethernet II">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <JFXTextArea fx:id="ethernetA" editable="false" maxWidth="1022.0" minWidth="1022.0" prefHeight="190.0" prefWidth="1022.0" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                            <TitledPane text="Internet Protocol Version 4">
-                              <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <JFXTextArea fx:id="protA" editable="false" maxWidth="1022.0" minWidth="1022.0" prefHeight="190.0" prefWidth="1022.0" />
-                                       </children>
-                                    </AnchorPane>
-                              </content>
-                            </TitledPane>
-                              <TitledPane layoutX="10.0" layoutY="61.0" text="Transmission Control Protocol">
+                        <Accordion>
+                           <panes>
+                              <TitledPane animated="false" prefHeight="300.0" prefWidth="1047.0" text="Ethernet, ARP, ICMP, IPv4">
                                  <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                       <children>
-                                          <JFXTextArea fx:id="TCP" editable="false" maxWidth="1022.0" minWidth="1022.0" prefHeight="190.0" prefWidth="1022.0" />
-                                       </children>
-                                    </AnchorPane>
+                                    <Accordion prefHeight="394.4" prefWidth="1044.8">
+                                       <panes>
+                                          <TitledPane text="Ethernet">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="ethernet" editable="false" maxWidth="1043.0" minWidth="1022.0" prefHeight="263.0" prefWidth="1043.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane text="ARP">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="arp" editable="false" maxWidth="1043.0" minWidth="1022.0" prefHeight="158.0" prefWidth="1043.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane prefHeight="194.0" prefWidth="1045.0" text="ICMP">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="ICMP" editable="false" maxWidth="1043.0" minWidth="1022.0" prefHeight="158.0" prefWidth="1043.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane layoutX="10.0" layoutY="61.0" text="IPv4">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="IP4" editable="false" maxWidth="1045.0" minWidth="1022.0" prefHeight="164.0" prefWidth="1045.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                       </panes>
+                                    </Accordion>
                                  </content>
                               </TitledPane>
-                          </panes>
+                              <TitledPane animated="false" prefHeight="300.0" prefWidth="1047.0" text="IPv6, TCP, UDP, HTTP">
+                                 <content>
+                                    <Accordion prefHeight="394.4" prefWidth="1044.8">
+                                       <panes>
+                                          <TitledPane prefHeight="181.0" prefWidth="1045.0" text="IPv6">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="IP6" editable="false" maxWidth="1042.0" minWidth="1022.0" prefHeight="158.0" prefWidth="1042.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane text="TCP">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="tcp" editable="false" maxWidth="1044.0" minWidth="1022.0" prefHeight="158.0" prefWidth="1044.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane text="UDP">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="udp" editable="false" maxWidth="1044.0" minWidth="1022.0" prefHeight="161.0" prefWidth="1044.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane layoutX="10.0" layoutY="61.0" text="HTTP">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <JFXTextArea fx:id="http" editable="false" maxWidth="1044.0" minWidth="1022.0" prefHeight="158.0" prefWidth="1044.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                       </panes>
+                                    </Accordion>
+                                 </content>
+                              </TitledPane>
+                           </panes>
                         </Accordion>
                      </children>
                   </AnchorPane>
