@@ -12,9 +12,9 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="MainWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="789.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.Main_Controller">
+<AnchorPane id="MainWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.Main_Controller">
    <children>
-      <MenuBar layoutX="-2.0" layoutY="-12.0" prefHeight="27.0" prefWidth="1068.0" AnchorPane.bottomAnchor="762.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <MenuBar layoutX="-4.0" layoutY="-1.0" prefHeight="30.0" prefWidth="1068.0" AnchorPane.bottomAnchor="677.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="-1.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
@@ -35,7 +35,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </MenuBar>
-      <TitledPane layoutX="10.0" layoutY="62.0" prefHeight="256.0" prefWidth="1046.0" text="Packet List">
+      <TitledPane layoutX="9.0" layoutY="44.0" prefHeight="256.0" prefWidth="1046.0" text="Packet List">
          <content>
             <TableView id="PacketListTable" prefHeight="218.0" prefWidth="1055.0">
                <columns>
@@ -50,7 +50,7 @@
             </TableView>
          </content>
       </TitledPane>
-      <Accordion layoutX="10.0" layoutY="338.0" prefHeight="446.0" prefWidth="1046.0">
+      <Accordion layoutX="13.0" layoutY="313.0" prefHeight="377.0" prefWidth="1046.0">
         <panes>
           <TitledPane text="Packet Details">
             <content>
