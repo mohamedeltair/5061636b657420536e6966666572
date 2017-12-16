@@ -1,6 +1,7 @@
 package packet.sniffer;
 
 import com.jfoenix.controls.JFXTextArea;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,8 +17,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import org.jnetpcap.JBufferHandler;
 import org.jnetpcap.Pcap;
+import org.jnetpcap.PcapDumper;
+import org.jnetpcap.PcapHeader;
 import org.jnetpcap.PcapIf;
+import org.jnetpcap.nio.JBuffer;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
 
@@ -92,17 +97,44 @@ public class Main_Controller implements Initializable {
         PacketsHandler.pcap.breakloop();  
     }
     
-     public void Load()
-    {
-        PacketsHandler.pcap.breakloop();  
-    }
-     
       public void Save()
     {
-        PacketsHandler.pcap.breakloop();  
-    }
-   
+        StringBuilder errbuf = new StringBuilder();  
+String fname = "tests/test-afs.pcap";  
+  
+Pcap pcap = Pcap.openOffline(fname, errbuf);
+    String ofile = "tmp-capture-file.cap";
     
+    
+   PcapDumper dumper = PacketsHandler.pcap.dumpOpen(ofile); // output file  
+  
+   JBufferHandler<PcapDumper> dumpHandler = new JBufferHandler<PcapDumper>() {  
+  
+  public void nextPacket(PcapHeader header, JBuffer buffer, PcapDumper dumper) {  
+  
+    dumper.dump(header, buffer);  
+  }      
+   };
+   PacketsHandler.pcap.loop(10,dumpHandler, dumper);
+  
+      File file = new File(ofile);  
+
+dumper.close(); // Won't be able to delete without explicit close  
+    PacketsHandler.pcap.close();
+    }
+      
+     public void Load()
+    {
+        String fname = "tmp-capture-file.cap";  
+  StringBuilder errbuf = new StringBuilder(); 
+        Pcap pcap = Pcap.openOffline(fname, errbuf);  
+        if (pcap == null) {  
+    System.err.printf("Error while opening device for capture: "  
+    + errbuf.toString());  
+    }
+    }
+     
+ 
     public String check(Object o){
         if(o == null) return "Protocol doesn't exist";
         return o.toString();
