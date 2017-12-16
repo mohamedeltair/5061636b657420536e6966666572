@@ -113,6 +113,10 @@ public class Main_Controller implements Initializable {
                 tcp.setText(check(Utilities.getTcp(PacketsHandler.packets.get(ind))));
                 udp.setText(check(Utilities.getUdp(PacketsHandler.packets.get(ind))));
                 http.setText(check(Utilities.getHttp(PacketsHandler.packets.get(ind))));
+                String html = check(Utilities.getHtml(PacketsHandler.packets.get(ind)));
+                if(!html.equals("Protocol doesn't exist")) {
+                    http.setText(http.getText()+"\n\nHtml:\n"+html);
+                }
                 phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
                 
                 });

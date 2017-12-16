@@ -11,6 +11,7 @@ import org.jnetpcap.packet.JHeaderPool;
 import org.jnetpcap.packet.JPacket;
 import org.jnetpcap.packet.Payload;
 import org.jnetpcap.packet.PcapPacket;
+import org.jnetpcap.protocol.application.Html;
 import org.jnetpcap.protocol.lan.Ethernet;
 import org.jnetpcap.protocol.network.Arp;
 import org.jnetpcap.protocol.network.Icmp;
@@ -27,6 +28,9 @@ import org.jnetpcap.protocol.tcpip.Udp;
 public class Utilities {
     public static int toUnsignedByte(byte val) {
         return (int)(val & 0x000000FF);
+    }
+    public static Html getHtml(PcapPacket packet) {
+        return packet.getHeader(new Html());   
     }
     public static Http getHttp(PcapPacket packet) {
         return packet.getHeader(new Http());   
