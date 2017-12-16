@@ -27,6 +27,7 @@ public class PacketsHandler extends Thread {
     private int index;
     List<PcapIf> alldevs;  
     StringBuilder errbuf; 
+    public static Pcap pcap;
     Main_Controller d;
     int count=1;
     static ArrayList<PcapPacket> packets = new ArrayList();
@@ -42,7 +43,7 @@ public class PacketsHandler extends Thread {
         int snaplen = 64 * 1024;           // Capture all packets, no trucation  
         int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
         int timeout = 10 * 1000;           // 10 seconds in millis  
-        Pcap pcap =  
+         pcap =  
             Pcap.openLive(device.getName(), snaplen, flags, timeout, errbuf);  
   
         if (pcap == null) {  

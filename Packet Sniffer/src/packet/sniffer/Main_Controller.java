@@ -87,6 +87,22 @@ public class Main_Controller implements Initializable {
         }
     }
     
+    public void Stop()
+    {
+        PacketsHandler.pcap.breakloop();  
+    }
+    
+     public void Load()
+    {
+        PacketsHandler.pcap.breakloop();  
+    }
+     
+      public void Save()
+    {
+        PacketsHandler.pcap.breakloop();  
+    }
+   
+    
     public String check(Object o){
         if(o == null) return "Protocol doesn't exist";
         return o.toString();
