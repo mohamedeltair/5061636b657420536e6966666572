@@ -149,25 +149,22 @@ dumper.close(); // Won't be able to delete without explicit close
          lengthC.setCellValueFactory(cellData->cellData.getValue().length);
          protC.setCellValueFactory(cellData->cellData.getValue().protocol);
          timeC.setCellValueFactory(cellData->cellData.getValue().time);
-                packets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                int ind=packets.getSelectionModel().getSelectedIndex();
-                
-                
-                ethernet.setText(check((Utilities.getEthernet(PacketsHandler.packets.get(ind)))));
-                arp.setText(check(Utilities.getArp(PacketsHandler.packets.get(ind))));
-                ICMP.setText(check(Utilities.getIcmp(PacketsHandler.packets.get(ind))));
-                IP4.setText(check(Utilities.getIp4(PacketsHandler.packets.get(ind))));
-                IP6.setText(check(Utilities.getIp6(PacketsHandler.packets.get(ind))));
-                tcp.setText(check(Utilities.getTcp(PacketsHandler.packets.get(ind))));
-                udp.setText(check(Utilities.getUdp(PacketsHandler.packets.get(ind))));
-                http.setText(check(Utilities.getHttp(PacketsHandler.packets.get(ind))));
-                String html = check(Utilities.getHtml(PacketsHandler.packets.get(ind)));
-                if(!html.equals("Protocol doesn't exist")) {
-                    http.setText(http.getText()+"\n\nHtml:\n"+html);
-                }
-                phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
-                
-                });
+        packets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            int ind=packets.getSelectionModel().getSelectedIndex();
+            ethernet.setText(check((Utilities.getEthernet(PacketsHandler.packets.get(ind)))));
+            arp.setText(check(Utilities.getArp(PacketsHandler.packets.get(ind))));
+            ICMP.setText(check(Utilities.getIcmp(PacketsHandler.packets.get(ind))));
+            IP4.setText(check(Utilities.getIp4(PacketsHandler.packets.get(ind))));
+            IP6.setText(Utilities.ip6Info(Utilities.getIp6(PacketsHandler.packets.get(ind))));
+            tcp.setText(check(Utilities.getTcp(PacketsHandler.packets.get(ind))));
+            udp.setText(check(Utilities.getUdp(PacketsHandler.packets.get(ind))));
+            http.setText(check(Utilities.getHttp(PacketsHandler.packets.get(ind))));
+            String html = check(Utilities.getHtml(PacketsHandler.packets.get(ind)));
+            if(!html.equals("Protocol doesn't exist")) {
+                http.setText(http.getText()+"\n\nHtml:\n"+html);
+            }
+            phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
+        });
     }
     public void addRow(Packet pck){
         pcks.add(pck);

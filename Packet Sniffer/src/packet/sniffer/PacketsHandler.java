@@ -62,6 +62,7 @@ public class PacketsHandler extends Thread {
                     user                                  
                     );
                 Ip4 ip4 = Utilities.getIp4(packet);
+                
                 Ip6 ip6 = Utilities.getIp6(packet);
                 Ethernet ethernet = Utilities.getEthernet(packet);
                 String source = "", destination = "";
@@ -70,8 +71,13 @@ public class PacketsHandler extends Thread {
                     destination = FormatUtils.ip(ip4.destination());
                 }
                 else if(ip6!=null) {
-                    source = FormatUtils.ip(ip6.source());
-                    destination = FormatUtils.ip(ip6.destination());
+                    //source = ip6.source().toString();
+                    //destination = ip6.destination().toString();
+                    //source = FormatUtils.asStringIp6(ip6.source(), false);
+                    //destination = FormatUtils.asStringIp6(ip6.destination(), false);
+                    //destination = ip6.source().length+"";
+                    source = Utilities.ip6ToString(ip6.source());
+                    destination = Utilities.ip6ToString(ip6.destination());
                 }
                 else if(ethernet != null) {
                     source = FormatUtils.mac(ethernet.source());
