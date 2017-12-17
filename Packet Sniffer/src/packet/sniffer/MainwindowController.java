@@ -111,8 +111,12 @@ public class MainwindowController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       readDevices();
        interfaces.setCellValueFactory(cellData-> cellData.getValue().str);
+       refresh();
+    }
+    @FXML
+    private void refresh(){
+    readDevices();
        ObservableList<inter> li=FXCollections.observableArrayList();
        for(int i=0 ; i<devsList.size() ; i++){
            li.add(new inter(devsList.get(i)));

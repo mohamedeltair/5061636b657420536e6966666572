@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
  * @author elteir
  */
 public class Packet {
-     SimpleStringProperty no,time,source,dest,protocol,length,info;
+    SimpleStringProperty no,time,source,dest,protocol,length,info;
 
     public Packet(String no, String time, String source, String dest, String protocol, String length, String info) {
         this.no = new SimpleStringProperty(no);
@@ -23,4 +23,9 @@ public class Packet {
         this.length = new SimpleStringProperty(length);
         this.info = new SimpleStringProperty(info);
     }
+
+    public SimpleStringProperty getProtocol() {
+        return protocol;
+    }
+    
 }

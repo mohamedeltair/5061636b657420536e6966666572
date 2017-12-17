@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -73,7 +75,7 @@ public class Main_Controller implements Initializable {
     private JFXTextArea http;
 
     @FXML
-    private JFXTextArea phexa;
+    private JFXTextArea phexa,filter;
     
     @FXML
     private TableColumn<Packet, String> infoC;
@@ -165,6 +167,23 @@ dumper.close(); // Won't be able to delete without explicit close
             }
             phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
         });
+        FilteredList<Packet> filteredData = new FilteredList<>(packets.getItems(), p -> true);
+        filter.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(packet -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (packet.getProtocol().getValue().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; 
+                } 
+                return false; 
+            });
+        });
+        SortedList<Packet> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(packets.comparatorProperty());
     }
     public void addRow(Packet pck){
         pcks.add(pck);

@@ -11,7 +11,7 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="MainWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.Main_Controller">
+<AnchorPane id="MainWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.Main_Controller">
    <children>
       <MenuBar layoutX="-4.0" layoutY="-1.0" prefHeight="30.0" prefWidth="1074.0" AnchorPane.bottomAnchor="677.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="-1.0">
         <menus>
@@ -34,7 +34,7 @@
             <DropShadow />
          </effect>
       </MenuBar>
-      <TitledPane layoutX="9.0" layoutY="44.0" prefHeight="256.0" prefWidth="1046.0" text="Packet List">
+      <TitledPane layoutX="9.0" layoutY="60.0" prefHeight="256.0" prefWidth="1046.0" text="Packet List">
          <content>
             <TableView id="PacketListTable" fx:id="packets" prefHeight="218.0" prefWidth="1055.0">
                <columns>
@@ -49,7 +49,7 @@
             </TableView>
          </content>
       </TitledPane>
-      <Accordion layoutX="13.0" layoutY="313.0" prefHeight="377.0" prefWidth="1046.0">
+      <Accordion layoutX="13.0" layoutY="329.0" prefHeight="377.0" prefWidth="1046.0">
         <panes>
           <TitledPane text="Packet Details">
             <content>
@@ -57,7 +57,7 @@
                      <children>
                         <Accordion>
                            <panes>
-                              <TitledPane animated="false" prefHeight="300.0" prefWidth="1047.0" text="Ethernet, ARP, ICMP, IPv4">
+                              <TitledPane prefHeight="300.0" prefWidth="1047.0" text="Ethernet, ARP, ICMP, IPv4">
                                  <content>
                                     <Accordion prefHeight="394.4" prefWidth="1044.8">
                                        <panes>
@@ -83,7 +83,7 @@
                                              <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                                    <children>
-                                                      <JFXTextArea fx:id="ICMP" editable="false" maxWidth="1043.0" minWidth="1022.0" prefHeight="158.0" prefWidth="1043.0" />
+                                                      <JFXTextArea fx:id="ICMP" editable="true" maxWidth="1043.0" minWidth="1022.0" prefHeight="158.0" prefWidth="1043.0" />
                                                    </children>
                                                 </AnchorPane>
                                              </content>
@@ -101,7 +101,7 @@
                                     </Accordion>
                                  </content>
                               </TitledPane>
-                              <TitledPane animated="false" prefHeight="300.0" prefWidth="1047.0" text="IPv6, TCP, UDP, HTTP">
+                              <TitledPane prefHeight="300.0" prefWidth="1047.0" text="IPv6, TCP, UDP, HTTP">
                                  <content>
                                     <Accordion prefHeight="394.4" prefWidth="1044.8">
                                        <panes>
