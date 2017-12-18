@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.jnetpcap.JBufferHandler;
 import org.jnetpcap.Pcap;
@@ -26,8 +27,13 @@ import org.jnetpcap.PcapDumper;
 import org.jnetpcap.PcapHeader;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.nio.JBuffer;
+import org.jnetpcap.packet.JHeader;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
+import org.jnetpcap.packet.format.FormatUtils;
+import org.jnetpcap.protocol.lan.Ethernet;
+import org.jnetpcap.protocol.network.Ip4;
+import org.jnetpcap.protocol.network.*;
 
 public class Main_Controller implements Initializable {  
     ObservableList<Packet> pcks=FXCollections.observableArrayList();
@@ -97,46 +103,100 @@ public class Main_Controller implements Initializable {
         }
     }
     
-    public void Stop()
+     public void Stop()
     {
         PacketsHandler.pcap.breakloop();  
     }
     
-      public void Save()
-    {
-        StringBuilder errbuf = new StringBuilder();  
-String fname = "tests/test-afs.pcap";  
-  
-Pcap pcap = Pcap.openOffline(fname, errbuf);
-    String ofile = "tmp-capture-file.cap";
-    
-    
-   PcapDumper dumper = PacketsHandler.pcap.dumpOpen(ofile); // output file  
-  
-   JBufferHandler<PcapDumper> dumpHandler = new JBufferHandler<PcapDumper>() {  
-  
-  public void nextPacket(PcapHeader header, JBuffer buffer, PcapDumper dumper) {  
-  
-    dumper.dump(header, buffer);  
-  }      
-   };
-   PacketsHandler.pcap.loop(10,dumpHandler, dumper);
-  
-      File file = new File(ofile);  
+    public void Load() {
+        
+          pcks.clear();
+        
+        FileChooser fc = new FileChooser();
+       fc.setTitle("Select pcap file");
 
-dumper.close(); // Won't be able to delete without explicit close  
-    PacketsHandler.pcap.close();
-    }
-      
-     public void Load()
-    {
-        String fname = "tmp-capture-file.cap";  
-  StringBuilder errbuf = new StringBuilder(); 
-        Pcap pcap = Pcap.openOffline(fname, errbuf);  
+        File selectedFile = fc.showOpenDialog(null);
+        String fileName = selectedFile.getAbsolutePath();
+if (selectedFile != null) {
+    
+StringBuilder errbuf = new StringBuilder();  
+    Pcap pcap = Pcap.openOffline(fileName,errbuf);
+        //2-check if all OK
         if (pcap == null) {  
-    System.err.printf("Error while opening device for capture: "  
-    + errbuf.toString());  
-    }
+          System.err.printf("Error while opening device for capture: "  
+    + errbuf.toString()); 
+            System.out.println("null");
+        }
+        else {System.out.println("correctPCAP");}
+        
+        System.out.println("CONTINUING");
+        
+        //3-create packet handler
+        PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
+               int count =1;
+            @Override
+            
+            public void nextPacket(PcapPacket packet, String user) {
+             
+              System.out.println("WHAT!");
+                System.out.printf("Received at %s caplen=%-4d len=%-4d %s\n",   
+                    new Date(packet.getCaptureHeader().timestampInMillis()),   
+                    packet.getCaptureHeader().caplen(), // Length actually captured
+                    packet.getCaptureHeader().wirelen(), // Original length  
+                    user // User supplied object  
+                    );  
+                /****************REDUNDANT CODE***************************/
+                Ip4 ip4 = Utilities.getIp4(packet);
+                
+                Ip6 ip6 = Utilities.getIp6(packet);
+                Ethernet ethernet = Utilities.getEthernet(packet);
+                String source = "", destination = "";
+                if(ip4!=null) {
+                    source = FormatUtils.ip(ip4.source());
+                    destination = FormatUtils.ip(ip4.destination());
+                }
+                else if(ip6!=null) {
+                   
+                    source = Utilities.ip6ToString(ip6.source());
+                    destination = Utilities.ip6ToString(ip6.destination());
+                }
+                else if(ethernet != null) {
+                    source = FormatUtils.mac(ethernet.source());
+                    destination = FormatUtils.mac(ethernet.destination());
+                }
+                else {
+                    source = "unknown";
+                    destination = "unknown";
+                }
+                ArrayList<JHeader> headers = Utilities.getHeaders(packet);
+                int last = headers.get(headers.size()-1).getName().equals("Html")?headers.size()-2:headers.size()-1;
+                String all = "";
+                for(int i=0; i<=last; i++) {
+                    all+=headers.get(i).getName();
+                    if(i!=last)
+                        all+=", ";
+                }
+                
+                /*********************************REDUNDANT CODE END**********************************/
+                
+             Main_Controller.this.addRow(new Packet((count++)+"", new Date(packet.getCaptureHeader().timestampInMillis()).toString(), source, destination,
+                        headers.get(last).getName(), packet.getCaptureHeader().wirelen()+"", "Protocols involved: "+all));
+              
+            }  
+        };
+        
+        try {
+           pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, "");
+        }
+        catch(Exception ex)
+        {
+            System.out.println("END OF FILE");
+        }
+        
+      
+        
+}
+
     }
      
  

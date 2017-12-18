@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.jnetpcap.Pcap;
+import org.jnetpcap.PcapDumper;
 import org.jnetpcap.PcapIf;
 import org.jnetpcap.packet.JHeader;
 import org.jnetpcap.packet.Payload;
@@ -51,10 +52,14 @@ public class PacketsHandler extends Thread {
                 + errbuf.toString());  
             return;  
         }  
-        
+        String ofile = "tmp-capture-file.pcap";  
+       
+        PcapDumper dumper = pcap.dumpOpen(ofile);
+     
         PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {  
   
             public void nextPacket(PcapPacket packet, String user) {  
+                dumper.dump(packet.getCaptureHeader(),packet);
                 System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",  
                     new Date(packet.getCaptureHeader().timestampInMillis()),   
                     packet.getCaptureHeader().caplen(),  
