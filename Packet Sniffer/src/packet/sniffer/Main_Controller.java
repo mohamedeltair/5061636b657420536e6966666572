@@ -171,7 +171,7 @@ dumper.close(); // Won't be able to delete without explicit close
             phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
         });
         filter.textProperty().addListener((observable, oldValue, newValue) -> {
-            FilteredList<Packet> filteredData = new FilteredList<>(packets.getItems(), p -> true);
+            FilteredList<Packet> filteredData = new FilteredList<>(pcks, p -> true);
             filteredData.setPredicate(packet -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
