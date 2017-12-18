@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -37,6 +39,18 @@ import org.jnetpcap.protocol.network.*;
 
 public class Main_Controller implements Initializable {  
     ObservableList<Packet> pcks=FXCollections.observableArrayList();
+    ObservableList<Packet> newPcks;
+    ChangeListener<Object> listener = new ChangeListener() {
+        @Override
+        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+            try {
+                modifyData();
+            }
+            catch(Exception e ){
+                
+            }
+        }
+    };
     @FXML
     private TableView<Packet> packets;
     @FXML
@@ -205,6 +219,28 @@ StringBuilder errbuf = new StringBuilder();
         return o.toString();
     }
 
+    synchronized public void modifyData() {
+        Packet p = packets.getSelectionModel().getSelectedItem();
+        if(p==null)
+            return;
+        int ind=Integer.parseInt(p.no.getValue())-1;
+        if(ind < 0 || ind >= PacketsHandler.packets.size())
+            return;
+        ethernet.setText(check((Utilities.getEthernet(PacketsHandler.packets.get(ind)))));
+        arp.setText(check(Utilities.getArp(PacketsHandler.packets.get(ind))));
+        ICMP.setText(check(Utilities.getIcmp(PacketsHandler.packets.get(ind))));
+        IP4.setText(check(Utilities.getIp4(PacketsHandler.packets.get(ind))));
+        IP6.setText(Utilities.ip6Info(Utilities.getIp6(PacketsHandler.packets.get(ind))));
+        tcp.setText(check(Utilities.getTcp(PacketsHandler.packets.get(ind))));
+        udp.setText(check(Utilities.getUdp(PacketsHandler.packets.get(ind))));
+        http.setText(check(Utilities.getHttp(PacketsHandler.packets.get(ind))));
+        String html = check(Utilities.getHtml(PacketsHandler.packets.get(ind)));
+        if(!html.equals("Protocol doesn't exist")) {
+            http.setText(http.getText()+"\n\nHtml:\n"+html);
+        }
+        phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
          numC.setCellValueFactory(cellData->cellData.getValue().no);
@@ -214,44 +250,29 @@ StringBuilder errbuf = new StringBuilder();
          lengthC.setCellValueFactory(cellData->cellData.getValue().length);
          protC.setCellValueFactory(cellData->cellData.getValue().protocol);
          timeC.setCellValueFactory(cellData->cellData.getValue().time);
-        packets.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            int ind=packets.getSelectionModel().getSelectedIndex();
-            ethernet.setText(check((Utilities.getEthernet(PacketsHandler.packets.get(ind)))));
-            arp.setText(check(Utilities.getArp(PacketsHandler.packets.get(ind))));
-            ICMP.setText(check(Utilities.getIcmp(PacketsHandler.packets.get(ind))));
-            IP4.setText(check(Utilities.getIp4(PacketsHandler.packets.get(ind))));
-            IP6.setText(Utilities.ip6Info(Utilities.getIp6(PacketsHandler.packets.get(ind))));
-            tcp.setText(check(Utilities.getTcp(PacketsHandler.packets.get(ind))));
-            udp.setText(check(Utilities.getUdp(PacketsHandler.packets.get(ind))));
-            http.setText(check(Utilities.getHttp(PacketsHandler.packets.get(ind))));
-            String html = check(Utilities.getHtml(PacketsHandler.packets.get(ind)));
-            if(!html.equals("Protocol doesn't exist")) {
-                http.setText(http.getText()+"\n\nHtml:\n"+html);
-            }
-            phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
-        });
+        packets.getSelectionModel().selectedItemProperty().addListener(listener);
         filter.textProperty().addListener((observable, oldValue, newValue) -> {
-            FilteredList<Packet> filteredData = new FilteredList<>(pcks, p -> true);
-            filteredData.setPredicate(packet -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (packet.getProtocol().getValue().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; 
-                } 
-                return false; 
-            });
-            SortedList<Packet> sortedData = new SortedList<>(filteredData);
-        sortedData.comparatorProperty().bind(packets.comparatorProperty());
-        packets.setItems(sortedData);
+            addRow(null);
         });
     }
-    public void addRow(Packet pck){
-        pcks.add(pck);
-        packets.setItems(pcks);
+    synchronized public void addRow(Packet pck){
+        try {
+            packets.getSelectionModel().selectedItemProperty().removeListener(listener);
+            if(pck != null)
+                pcks.add(pck);
+            String text = filter.getText().trim().toLowerCase();
+            newPcks=FXCollections.observableArrayList();
+            for(int i=0; i<pcks.size(); i++) {
+                if(pcks.get(i).protocol.getValue().toLowerCase().startsWith(text)) {
+                    newPcks.add(pcks.get(i));
+                }
+            }
+            packets.setItems(newPcks);
+            packets.getSelectionModel().selectedItemProperty().addListener(listener);
+        }
+        catch(Exception e) {
+            
+        }
     }
     
 }

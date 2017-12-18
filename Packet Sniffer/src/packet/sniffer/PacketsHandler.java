@@ -59,50 +59,55 @@ public class PacketsHandler extends Thread {
         PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {  
   
             public void nextPacket(PcapPacket packet, String user) {  
-                dumper.dump(packet.getCaptureHeader(),packet);
-                System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",  
-                    new Date(packet.getCaptureHeader().timestampInMillis()),   
-                    packet.getCaptureHeader().caplen(),  
-                    packet.getCaptureHeader().wirelen(),  
-                    user                                  
-                    );
-                Ip4 ip4 = Utilities.getIp4(packet);
-                
-                Ip6 ip6 = Utilities.getIp6(packet);
-                Ethernet ethernet = Utilities.getEthernet(packet);
-                String source = "", destination = "";
-                if(ip4!=null) {
-                    source = FormatUtils.ip(ip4.source());
-                    destination = FormatUtils.ip(ip4.destination());
+                try {
+                    dumper.dump(packet.getCaptureHeader(),packet);
+                    System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",  
+                        new Date(packet.getCaptureHeader().timestampInMillis()),   
+                        packet.getCaptureHeader().caplen(),  
+                        packet.getCaptureHeader().wirelen(),  
+                        user                                  
+                        );
+                    Ip4 ip4 = Utilities.getIp4(packet);
+
+                    Ip6 ip6 = Utilities.getIp6(packet);
+                    Ethernet ethernet = Utilities.getEthernet(packet);
+                    String source = "", destination = "";
+                    if(ip4!=null) {
+                        source = FormatUtils.ip(ip4.source());
+                        destination = FormatUtils.ip(ip4.destination());
+                    }
+                    else if(ip6!=null) {
+                        //source = ip6.source().toString();
+                        //destination = ip6.destination().toString();
+                        //source = FormatUtils.asStringIp6(ip6.source(), false);
+                        //destination = FormatUtils.asStringIp6(ip6.destination(), false);
+                        //destination = ip6.source().length+"";
+                        source = Utilities.ip6ToString(ip6.source());
+                        destination = Utilities.ip6ToString(ip6.destination());
+                    }
+                    else if(ethernet != null) {
+                        source = FormatUtils.mac(ethernet.source());
+                        destination = FormatUtils.mac(ethernet.destination());
+                    }
+                    else {
+                        source = "unknown";
+                        destination = "unknown";
+                    }
+                    ArrayList<JHeader> headers = Utilities.getHeaders(packet);
+                    int last = headers.get(headers.size()-1).getName().equals("Html")?headers.size()-2:headers.size()-1;
+                    String all = "";
+                    for(int i=0; i<=last; i++) {
+                        all+=headers.get(i).getName();
+                        if(i!=last)
+                            all+=", ";
+                    }
+                    d.addRow(new Packet((count++)+"", new Date(packet.getCaptureHeader().timestampInMillis()).toString(), source, destination,
+                            headers.get(last).getName(), packet.getCaptureHeader().wirelen()+"", "Protocols involved: "+all));
+                    packets.add(packet);
                 }
-                else if(ip6!=null) {
-                    //source = ip6.source().toString();
-                    //destination = ip6.destination().toString();
-                    //source = FormatUtils.asStringIp6(ip6.source(), false);
-                    //destination = FormatUtils.asStringIp6(ip6.destination(), false);
-                    //destination = ip6.source().length+"";
-                    source = Utilities.ip6ToString(ip6.source());
-                    destination = Utilities.ip6ToString(ip6.destination());
+                catch(Exception e) {
+                    
                 }
-                else if(ethernet != null) {
-                    source = FormatUtils.mac(ethernet.source());
-                    destination = FormatUtils.mac(ethernet.destination());
-                }
-                else {
-                    source = "unknown";
-                    destination = "unknown";
-                }
-                ArrayList<JHeader> headers = Utilities.getHeaders(packet);
-                int last = headers.get(headers.size()-1).getName().equals("Html")?headers.size()-2:headers.size()-1;
-                String all = "";
-                for(int i=0; i<=last; i++) {
-                    all+=headers.get(i).getName();
-                    if(i!=last)
-                        all+=", ";
-                }
-                d.addRow(new Packet((count++)+"", new Date(packet.getCaptureHeader().timestampInMillis()).toString(), source, destination,
-                        headers.get(last).getName(), packet.getCaptureHeader().wirelen()+"", "Protocols involved: "+all));
-                packets.add(packet);
             }  
         };  
         pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, "");   
