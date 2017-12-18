@@ -35,7 +35,7 @@
             <DropShadow />
          </effect>
       </MenuBar>
-      <TitledPane layoutX="9.0" layoutY="60.0" prefHeight="256.0" prefWidth="1046.0" text="Packet List">
+      <TitledPane layoutX="9.0" layoutY="68.0" prefHeight="256.0" prefWidth="1046.0" text="Packet List">
          <content>
             <TableView id="PacketListTable" fx:id="packets" prefHeight="218.0" prefWidth="1055.0">
                <columns>
@@ -163,6 +163,6 @@
           </TitledPane>
         </panes>
       </Accordion>
-      <JFXTextField fx:id="filter" layoutX="9.0" layoutY="29.0" maxWidth="306.0" minWidth="306.0" prefHeight="33.0" prefWidth="306.0" promptText="Filter" />
+      <JFXTextField fx:id="filter" layoutX="9.0" layoutY="32.0" maxWidth="306.0" minWidth="306.0" prefHeight="30.0" prefWidth="306.0" promptText="Filter" />
    </children>
 </AnchorPane>

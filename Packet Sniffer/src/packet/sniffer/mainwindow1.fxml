@@ -13,6 +13,6 @@
         </columns>
       </TableView>
       <JFXButton fx:id="captureID" layoutX="157.0" layoutY="518.0" onAction="#capture" prefHeight="44.0" prefWidth="121.0" text="Capture" />
-      <JFXButton layoutX="342.0" layoutY="518.0" prefHeight="44.0" prefWidth="121.0" text="Refresh" />
+      <JFXButton layoutX="342.0" layoutY="518.0" prefHeight="44.0" onAction="#refresh" prefWidth="121.0" text="Refresh" />
    </children>
 </AnchorPane>

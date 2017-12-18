@@ -1,6 +1,7 @@
 package packet.sniffer;
 
 import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -75,7 +76,9 @@ public class Main_Controller implements Initializable {
     private JFXTextArea http;
 
     @FXML
-    private JFXTextArea phexa,filter;
+    private JFXTextArea phexa;
+    @FXML
+    private JFXTextField filter;
     
     @FXML
     private TableColumn<Packet, String> infoC;
