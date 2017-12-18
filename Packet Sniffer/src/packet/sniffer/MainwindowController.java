@@ -116,7 +116,7 @@ public class MainwindowController implements Initializable {
     }
     @FXML
     private void refresh(){
-        //readDevices();
+        readDevices();
        ObservableList<inter> li=FXCollections.observableArrayList();
        for(int i=0 ; i<devsList.size() ; i++){
            li.add(new inter(devsList.get(i)));
