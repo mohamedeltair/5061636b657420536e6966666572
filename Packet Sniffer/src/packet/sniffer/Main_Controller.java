@@ -170,8 +170,8 @@ dumper.close(); // Won't be able to delete without explicit close
             }
             phexa.setText(Utilities.getHexa(PacketsHandler.packets.get(ind)));
         });
-        FilteredList<Packet> filteredData = new FilteredList<>(packets.getItems(), p -> true);
         filter.textProperty().addListener((observable, oldValue, newValue) -> {
+            FilteredList<Packet> filteredData = new FilteredList<>(packets.getItems(), p -> true);
             filteredData.setPredicate(packet -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
@@ -184,9 +184,10 @@ dumper.close(); // Won't be able to delete without explicit close
                 } 
                 return false; 
             });
-        });
-        SortedList<Packet> sortedData = new SortedList<>(filteredData);
+            SortedList<Packet> sortedData = new SortedList<>(filteredData);
         sortedData.comparatorProperty().bind(packets.comparatorProperty());
+        packets.setItems(sortedData);
+        });
     }
     public void addRow(Packet pck){
         pcks.add(pck);
