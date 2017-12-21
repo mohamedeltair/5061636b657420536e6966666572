@@ -131,12 +131,17 @@ public class MainwindowController implements Initializable{
     
     
     
-    
+    public void fillTable(){
+       readDevices();
+       li=FXCollections.observableArrayList();
+       for(int i=0 ; i<devsList.size() ; i++) li.add(new inter(devsList.get(i)));
+       alldevstable.setItems(li);
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        interfaces.setCellValueFactory(cellData-> cellData.getValue().str);
-       
+       fillTable();
     }
     
 
