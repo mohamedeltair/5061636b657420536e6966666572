@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.*;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
@@ -77,6 +79,7 @@ public class MainwindowController implements Initializable{
     private JFXButton captureID;
     @FXML
     void capture(ActionEvent event) {
+        Main_Controller.stopBtnIsClicked = false;
         int index = alldevstable.getSelectionModel().getSelectedIndex();
         if(index != -1){
         Stage stage = (Stage)captureID.getScene().getWindow();
@@ -93,6 +96,20 @@ public class MainwindowController implements Initializable{
         Stage stage2=(Stage)((Node)event.getSource()).getScene().getWindow();
         Parent root1 = loader.getRoot();
         Scene scene1 = new Scene(root1);
+        stage.setOnHiding(new EventHandler<WindowEvent>() {
+
+         @Override
+         public void handle(WindowEvent event) {
+             Platform.runLater(new Runnable() {
+
+                 @Override
+                 public void run() {
+                     Thread.currentThread().interrupt();
+                     System.exit(0);
+                 }
+             });
+         }
+     });
         stage2.setScene(scene1);
         stage2.show();
         stage2.setResizable(false);

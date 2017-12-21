@@ -102,6 +102,8 @@ public class Main_Controller implements Initializable {
     
     @FXML
     private TableColumn<Packet, String> infoC;
+    
+    public static boolean stopBtnIsClicked = false;
 
     public void showInterfacesWindow(){
         try{
@@ -119,11 +121,12 @@ public class Main_Controller implements Initializable {
     
      public void Stop()
     {
-        PacketsHandler.pcap.breakloop();  
+        if(!stopBtnIsClicked) PacketsHandler.pcap.breakloop();
+        stopBtnIsClicked = true;
     }
     
     public void Load() {
-        
+          stopBtnIsClicked = true;
           pcks.clear();
         
         FileChooser fc = new FileChooser();
