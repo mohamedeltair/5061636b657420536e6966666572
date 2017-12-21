@@ -67,24 +67,7 @@ public class MainwindowController implements Initializable{
     ArrayList<String> devsList = new ArrayList<String>();
     List<PcapIf> alldevs;  
     StringBuilder errbuf; 
-    private void readDevices(){
-        alldevs = new ArrayList<PcapIf>();  
-        errbuf = new StringBuilder(); 
-        /*************************************************************************** 
-         * First get a list of devices on this system 
-         **************************************************************************/  
-        int r = Pcap.findAllDevs(alldevs, errbuf);  
-  
-        int i = 0;  
-        for (PcapIf device : alldevs) {  
-            String description =  
-                (device.getDescription() != null) ? device.getDescription()  
-                    : "No description available";  
-            devsList.add("#"+ ++i +"      "+description);
-        }  
-        
-    }
-
+    ObservableList<inter> li;
     @FXML
     private TableColumn<inter, String> interfaces;
     @FXML
@@ -127,19 +110,34 @@ public class MainwindowController implements Initializable{
         }
         }
     }
+    
+    private void readDevices(){
+        alldevs = new ArrayList<PcapIf>();  
+        errbuf = new StringBuilder(); 
+        /*************************************************************************** 
+         * First get a list of devices on this system 
+         **************************************************************************/  
+        int r = Pcap.findAllDevs(alldevs, errbuf);  
+  
+        int i = 0;  
+        for (PcapIf device : alldevs) {  
+            String description =  
+                (device.getDescription() != null) ? device.getDescription()  
+                    : "No description available";  
+            devsList.add("#"+ ++i +"      "+description);
+        }  
+        
+    }
+    
+    
+    
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        interfaces.setCellValueFactory(cellData-> cellData.getValue().str);
-       refresh();
+       
     }
-    @FXML
-    private void refresh(){
-        readDevices();
-       ObservableList<inter> li=FXCollections.observableArrayList();
-       for(int i=0 ; i<devsList.size() ; i++){
-           li.add(new inter(devsList.get(i)));
-       }
-       alldevstable.setItems(li);
-    }
+    
 
 }
