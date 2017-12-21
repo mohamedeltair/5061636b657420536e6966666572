@@ -13,12 +13,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.jnetpcap.Pcap;
@@ -58,7 +62,7 @@ class inter{
 }
 
 
-public class MainwindowController implements Initializable {
+public class MainwindowController implements Initializable{
     
     ArrayList<String> devsList = new ArrayList<String>();
     List<PcapIf> alldevs;  
@@ -91,6 +95,7 @@ public class MainwindowController implements Initializable {
     @FXML
     void capture(ActionEvent event) {
         int index = alldevstable.getSelectionModel().getSelectedIndex();
+        if(index != -1){
         Stage stage = (Stage)captureID.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PS_View.fxml"));
@@ -108,6 +113,19 @@ public class MainwindowController implements Initializable {
         stage2.setScene(scene1);
         stage2.show();
         stage2.setResizable(false);
+        }
+        else{
+            try{
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Woops , Something went wrong :(");
+            alert.setContentText("Please select an interface from the list or click on refresh if nothing is displayed");
+            alert.showAndWait();
+        }
+        catch(Exception e){
+            System.out.println(e.toString());
+        }
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -123,4 +141,5 @@ public class MainwindowController implements Initializable {
        }
        alldevstable.setItems(li);
     }
+
 }
