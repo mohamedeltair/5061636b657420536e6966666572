@@ -130,12 +130,16 @@ public class MainwindowController implements Initializable{
     }
     
     
-    
     public void fillTable(){
        readDevices();
        li=FXCollections.observableArrayList();
        for(int i=0 ; i<devsList.size() ; i++) li.add(new inter(devsList.get(i)));
        alldevstable.setItems(li);
+    }
+    
+    public void emptyTable(){
+        devsList.clear();
+        li.clear();
     }
     
     @Override
@@ -144,5 +148,13 @@ public class MainwindowController implements Initializable{
        fillTable();
     }
     
+    
+    @FXML
+    private void refresh(){
+        alldevstable.refresh();
+        emptyTable();
+        fillTable();
+        alldevstable.refresh();
+    }
 
 }
