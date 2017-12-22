@@ -21,8 +21,8 @@
           <TableColumn fx:id="interfaces" minWidth="200.0" prefWidth="588.0" text="Interfaces" />
         </columns>
       </TableView>
-      <JFXButton fx:id="captureID" buttonType="RAISED" layoutX="157.0" layoutY="549.0" onAction="#capture" prefHeight="44.0" prefWidth="121.0" ripplerFill="#384abf" style="-fx-background-color: #330066;" text="Capture" textFill="WHITE" />
-      <JFXButton buttonType="RAISED" layoutX="342.0" layoutY="549.0" onAction="#refresh" prefHeight="44.0" prefWidth="121.0" ripplerFill="#384abf" style="-fx-background-color: #330066;" text="Refresh" textFill="WHITE" />
+      <JFXButton fx:id="captureID" buttonType="RAISED" layoutX="29.0" layoutY="547.0" onAction="#capture" prefHeight="44.0" prefWidth="121.0" ripplerFill="#29c8d7" style="-fx-background-color: #330066;" text="Capture" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="214.0" layoutY="547.0" onAction="#refresh" prefHeight="44.0" prefWidth="121.0" ripplerFill="#29c8d7" style="-fx-background-color: #330066;" text="Refresh" textFill="WHITE" />
       <Label layoutX="319.0" layoutY="106.0" text="Shark" textFill="#42cdaf">
          <font>
             <Font size="32.0" />
@@ -34,5 +34,6 @@
          </font>
       </Label>
       <AnchorPane fx:id="root" layoutX="116.0" layoutY="613.0" prefHeight="74.0" prefWidth="412.0" stylesheets="@main.css" />
+      <JFXButton buttonType="RAISED" layoutX="453.0" layoutY="547.0" prefHeight="44.0" prefWidth="149.0" ripplerFill="#6d15c5" style="-fx-background-color: #42cdaf;" text="Machine Learning" textFill="WHITE" />
    </children>
 </AnchorPane>

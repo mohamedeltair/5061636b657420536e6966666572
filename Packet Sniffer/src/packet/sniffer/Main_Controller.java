@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -106,8 +107,10 @@ public class Main_Controller implements Initializable {
     
     public static boolean stopBtnIsClicked = false;
 
-    public void showInterfacesWindow(){
+    public void showInterfacesWindow(ActionEvent event){
         try{
+            Stage stage=(Stage)filter.getScene().getWindow();
+            stage.close();
             Stage window = new Stage();
             window.setTitle("Devices List");
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
