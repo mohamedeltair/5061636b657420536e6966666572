@@ -2,8 +2,10 @@ package packet.sniffer;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,12 +16,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
@@ -97,7 +101,8 @@ public class Main_Controller implements Initializable {
     private JFXTextArea phexa;
     @FXML
     private JFXTextField filter;
-    
+    @FXML
+    Hyperlink hyperlink;
     @FXML
     private TableColumn<Packet, String> infoC;
     
@@ -107,7 +112,7 @@ public class Main_Controller implements Initializable {
         try{
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
         Scene scene = new Scene(root);
-        Stage stage=(Stage)((Node)even.getSource()).getScene().getWindow();
+        Stage stage=(Stage)packets.getScene().getWindow();
         stage.setScene(scene);
         stage.setTitle("Devices List");
         stage.show();
@@ -276,6 +281,16 @@ StringBuilder errbuf = new StringBuilder();
         packets.getSelectionModel().selectedItemProperty().addListener(listener);
         filter.textProperty().addListener((observable, oldValue, newValue) -> {
             addRow(null);
+        });
+        hyperlink.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://github.com/mohamedeltair/5061636b657420536e6966666572/graphs/contributors"));
+                } catch (Exception ex) {
+                }
+            }
         });
     }
     synchronized public void addRow(Packet pck){
