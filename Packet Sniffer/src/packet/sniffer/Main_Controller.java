@@ -3,11 +3,14 @@ package packet.sniffer;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -131,13 +134,24 @@ public class Main_Controller implements Initializable {
      
      public void Save()
      {
-         String ofile = "tmp-capture-file.pcap";  
-           PcapDumper dumper = pcap.dumpOpen(ofile);
-       
-        for(int i =0; i<PacketsHandler.packets.size(); i++)
-        {
+        try {
+            FileChooser fc = new FileChooser();
+            fc.setTitle("Select file location");
+            
+            File selectedFile = fc.showOpenDialog(null);
+            String ofile = selectedFile.getCanonicalPath();
+            if(!ofile.endsWith(".pcap")){
+                ofile+=".pcap";
+            }
+            PcapDumper dumper = pcap.dumpOpen(ofile);
+            
+            for(int i =0; i<PacketsHandler.packets.size(); i++)
+            {
                 dumper.dump(PacketsHandler.packets.get(i).getCaptureHeader(),PacketsHandler.packets.get(i));
-        }   
+            }   
+        } catch (IOException ex) {
+            System.out.println("save exception");
+        }
      }
     
     public void Load() {
