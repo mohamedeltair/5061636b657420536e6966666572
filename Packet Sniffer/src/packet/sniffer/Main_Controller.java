@@ -9,14 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -112,14 +108,15 @@ public class Main_Controller implements Initializable {
 
     public void showInterfacesWindow(ActionEvent event){
         try{
-            Stage stage=(Stage)filter.getScene().getWindow();
-            stage.close();
+            
             Stage window = new Stage();
             window.setTitle("Devices List");
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
             Scene interfacesView = new Scene(root);
             window.setScene(interfacesView);
             window.show();
+            Stage stage=(Stage)filter.getScene().getWindow();
+            stage.close();
         }
         catch(Exception e){
             System.out.println(e.toString());
