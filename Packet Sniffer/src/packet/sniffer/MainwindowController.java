@@ -129,17 +129,6 @@ public class MainwindowController implements Initializable{
                 }
             };
             snack.show("Please select an interface or click Refresh","Okay",3000,handler);
-//            try{
-//            Alert alert = new Alert(AlertType.ERROR);
-//            alert.setTitle("Error");
-//            alert.setHeaderText("Woops , Something went wrong :(");
-//            alert.setContentText("Please select an interface from the list or click on refresh if nothing is displayed");
-//            alert.showAndWait();
-//        }
-//        catch(Exception e){
-//            System.out.println(e.toString());
-//        }
-//            captureID.setFocusTraversable(false);
         }
     }
     

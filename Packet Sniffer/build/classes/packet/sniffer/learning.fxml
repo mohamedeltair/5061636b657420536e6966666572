@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import java.net.URL?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="532.0" prefWidth="912.0" style="-fx-background-color: #fff;" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.65" fx:controller="packet.sniffer.LearningController">
+    <stylesheets>
+        <URL value="@main.css" />
+    </stylesheets>
+   <children>
+      <JFXHamburger layoutY="1.0" prefHeight="26.0" prefWidth="30.0" />
+      <TableView fx:id="result" layoutX="103.0" layoutY="95.0" prefHeight="368.0" prefWidth="758.0">
+        <columns>
+          <TableColumn fx:id="num" prefWidth="75.0" text="No." />
+          <TableColumn fx:id="recog" prefWidth="264.504150390625" text="Recognised Protocols" />
+            <TableColumn fx:id="act" prefWidth="302.495849609375" text="Actual protocols" />
+            <TableColumn fx:id="accCol" prefWidth="118.22589111328125" text="Accuracy" />
+        </columns>
+      </TableView>
+      <JFXButton buttonType="RAISED" layoutX="103.0" layoutY="14.0" onAction="#learn" prefHeight="44.0" prefWidth="121.0" ripplerFill="#29c8d7" style="-fx-background-color: #330066;" text="Learn" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="288.0" layoutY="14.0" onAction="#recognise" prefHeight="44.0" prefWidth="121.0" ripplerFill="#29c8d7" style="-fx-background-color: #330066;" text="Recognise" textFill="WHITE" />
+      <JFXButton layoutX="1.0" onAction="#back" prefHeight="20.0" prefWidth="29.0" text=" " />
+   </children>
+</AnchorPane>
