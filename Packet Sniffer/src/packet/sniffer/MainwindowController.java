@@ -1,6 +1,7 @@
 package packet.sniffer;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXSnackbar;
 import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.*;
@@ -10,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -78,10 +81,13 @@ public class MainwindowController implements Initializable{
     @FXML
     private JFXButton captureID;
     @FXML
+    private AnchorPane root;
+    @FXML
     void capture(ActionEvent event) {
         Main_Controller.stopBtnIsClicked = false;
         int index = alldevstable.getSelectionModel().getSelectedIndex();
         if(index != -1){
+
         Stage stage = (Stage)captureID.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("PS_View.fxml"));
@@ -115,16 +121,25 @@ public class MainwindowController implements Initializable{
         stage2.setResizable(false);
         }
         else{
-            try{
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Woops , Something went wrong :(");
-            alert.setContentText("Please select an interface from the list or click on refresh if nothing is displayed");
-            alert.showAndWait();
-        }
-        catch(Exception e){
-            System.out.println(e.toString());
-        }
+            JFXSnackbar snack=new JFXSnackbar(root);
+            EventHandler handler =new EventHandler() {
+                @Override
+                public void handle(Event event) {
+                      snack.close();
+                }
+            };
+            snack.show("Please select an interface or click Refresh","Okay",3000,handler);
+//            try{
+//            Alert alert = new Alert(AlertType.ERROR);
+//            alert.setTitle("Error");
+//            alert.setHeaderText("Woops , Something went wrong :(");
+//            alert.setContentText("Please select an interface from the list or click on refresh if nothing is displayed");
+//            alert.showAndWait();
+//        }
+//        catch(Exception e){
+//            System.out.println(e.toString());
+//        }
+//            captureID.setFocusTraversable(false);
         }
     }
     
