@@ -108,15 +108,15 @@ public class Main_Controller implements Initializable {
 
     public void showInterfacesWindow(ActionEvent event){
         try{
-            
+            Stage stage=(Stage)packets.getScene().getWindow();
+            stage.close();
             Stage window = new Stage();
             window.setTitle("Devices List");
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
             Scene interfacesView = new Scene(root);
             window.setScene(interfacesView);
             window.show();
-            Stage stage=(Stage)filter.getScene().getWindow();
-            stage.close();
+
         }
         catch(Exception e){
             System.out.println(e.toString());
