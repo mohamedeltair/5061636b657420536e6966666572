@@ -2,7 +2,6 @@ package packet.sniffer;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSnackbar;
-import java.awt.event.KeyEvent;
 import java.net.URL;
 import java.util.*;
 import java.util.ResourceBundle;
@@ -16,37 +15,17 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapIf;
-import org.jnetpcap.packet.JHeader;
-import org.jnetpcap.packet.JHeaderPool;
-import org.jnetpcap.packet.JPacket;
-import org.jnetpcap.packet.Payload;
-import org.jnetpcap.packet.PcapPacket;
-import org.jnetpcap.packet.PcapPacketHandler;
-import org.jnetpcap.packet.format.FormatUtils;
-import org.jnetpcap.protocol.lan.Ethernet;
-import org.jnetpcap.protocol.network.Arp;
-import org.jnetpcap.protocol.network.Icmp;
-import org.jnetpcap.protocol.network.Ip4;
-import org.jnetpcap.protocol.network.Ip6;
-import org.jnetpcap.protocol.tcpip.Http;
-import org.jnetpcap.protocol.tcpip.Tcp;
-import org.jnetpcap.protocol.tcpip.Udp;
 
 /**
  * FXML Controller class
@@ -175,5 +154,21 @@ public class MainwindowController implements Initializable{
         emptyTable();
         fillTable();
     }
+    @FXML
+    void open(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader();
+           loader.setLocation(getClass().getResource("Library_FXML.fxml"));
+         try {
+             loader.load();       
+        } catch(Exception e) {
+           e.printStackTrace();
+          }
+                      Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+         Parent root1 = loader.getRoot();             
+ Scene scene1 = new Scene(root1);
+stage.setScene(scene1);
+stage.show();
+        stage.setResizable(false);
 
+    }
 }
