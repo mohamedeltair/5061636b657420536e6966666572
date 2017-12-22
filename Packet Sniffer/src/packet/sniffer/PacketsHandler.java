@@ -41,6 +41,7 @@ public class PacketsHandler extends Thread {
     }
     @Override
     public void run() {
+        packets.clear();
         PcapIf device = alldevs.get(index);
         int snaplen = 64 * 1024;           // Capture all packets, no trucation  
         int flags = Pcap.MODE_PROMISCUOUS; // capture all packets  
