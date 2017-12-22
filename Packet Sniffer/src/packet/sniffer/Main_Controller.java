@@ -171,7 +171,7 @@ StringBuilder errbuf = new StringBuilder();
         }
         else {System.out.println("correctPCAP");}
         
-        System.out.println("CONTINUING");
+           PacketsHandler.packets.clear();
         
         //3-create packet handler
         PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {
@@ -180,7 +180,9 @@ StringBuilder errbuf = new StringBuilder();
             
             public void nextPacket(PcapPacket packet, String user) {
              
-              System.out.println("WHAT!");
+            
+                PacketsHandler.packets.add(packet);
+                
                 System.out.printf("Received at %s caplen=%-4d len=%-4d %s\n",   
                     new Date(packet.getCaptureHeader().timestampInMillis()),   
                     packet.getCaptureHeader().caplen(), // Length actually captured
@@ -223,6 +225,7 @@ StringBuilder errbuf = new StringBuilder();
                 
              Main_Controller.this.addRow(new Packet((count++)+"", new Date(packet.getCaptureHeader().timestampInMillis()).toString(), source, destination,
                         headers.get(last).getName(), packet.getCaptureHeader().wirelen()+"", "Protocols involved: "+all));
+           
               
             }  
         };
@@ -254,6 +257,7 @@ StringBuilder errbuf = new StringBuilder();
         int ind=Integer.parseInt(p.no.getValue())-1;
         if(ind < 0 || ind >= PacketsHandler.packets.size())
             return;
+        
         ethernet.setText(check((Utilities.getEthernet(PacketsHandler.packets.get(ind)))));
         arp.setText(check(Utilities.getArp(PacketsHandler.packets.get(ind))));
         ICMP.setText(check(Utilities.getIcmp(PacketsHandler.packets.get(ind))));
