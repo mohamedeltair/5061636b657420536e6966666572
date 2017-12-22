@@ -135,7 +135,7 @@ public class Main_Controller implements Initializable {
             FileChooser fc = new FileChooser();
             fc.setTitle("Select file location");
             
-            File selectedFile = fc.showOpenDialog(null);
+            File selectedFile = fc.showSaveDialog(null);
             String ofile = selectedFile.getCanonicalPath();
             if(!ofile.endsWith(".pcap")){
                 ofile+=".pcap";
