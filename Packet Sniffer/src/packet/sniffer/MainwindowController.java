@@ -148,7 +148,7 @@ public class MainwindowController implements Initializable{
     
     
     public void fillTable(){
-       readDevices();
+       //readDevices();
        li=FXCollections.observableArrayList();
        for(int i=0 ; i<devsList.size() ; i++) li.add(new inter(devsList.get(i)));
        alldevstable.setItems(li);
@@ -168,10 +168,8 @@ public class MainwindowController implements Initializable{
     
     @FXML
     private void refresh(){
-        alldevstable.refresh();
         emptyTable();
         fillTable();
-        alldevstable.refresh();
     }
 
 }
