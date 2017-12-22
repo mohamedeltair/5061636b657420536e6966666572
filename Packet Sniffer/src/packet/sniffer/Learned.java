@@ -7,6 +7,15 @@ package packet.sniffer;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.util.*;
+
+class Node {
+    int attrNum;
+    ArrayList<Pair<Integer, Node>> children;
+}
+
 public class Learned {
     SimpleStringProperty number,recognised,actual,acc;
 

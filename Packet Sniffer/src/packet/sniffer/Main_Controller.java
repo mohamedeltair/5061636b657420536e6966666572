@@ -155,7 +155,8 @@ public class Main_Controller implements Initializable {
         try{
             stopBtnIsClicked = true;
           pcks.clear();
-        
+          PacketsHandler.packets.clear();
+          
         FileChooser fc = new FileChooser();
        fc.setTitle("Select pcap file");
 
