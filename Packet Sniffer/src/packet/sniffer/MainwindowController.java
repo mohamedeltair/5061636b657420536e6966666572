@@ -165,9 +165,9 @@ public class MainwindowController implements Initializable{
           }
                       Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
          Parent root1 = loader.getRoot();             
- Scene scene1 = new Scene(root1);
-stage.setScene(scene1);
-stage.show();
+            Scene scene1 = new Scene(root1);
+           stage.setScene(scene1);
+           stage.show();
         stage.setResizable(false);
 
     }

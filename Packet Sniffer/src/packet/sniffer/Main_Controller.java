@@ -17,18 +17,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.jnetpcap.JBufferHandler;
 import org.jnetpcap.Pcap;
 import org.jnetpcap.PcapDumper;
-import org.jnetpcap.PcapHeader;
-import org.jnetpcap.PcapIf;
-import org.jnetpcap.nio.JBuffer;
 import org.jnetpcap.packet.JHeader;
 import org.jnetpcap.packet.PcapPacket;
 import org.jnetpcap.packet.PcapPacketHandler;
@@ -106,17 +103,14 @@ public class Main_Controller implements Initializable {
     
     public static boolean stopBtnIsClicked = false;
 
-    public void showInterfacesWindow(ActionEvent event){
+    public void showInterfacesWindow(ActionEvent even){
         try{
-            Stage stage=(Stage)packets.getScene().getWindow();
-            stage.close();
-            Stage window = new Stage();
-            window.setTitle("Devices List");
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
-            Scene interfacesView = new Scene(root);
-            window.setScene(interfacesView);
-            window.show();
-
+        Scene scene = new Scene(root);
+        Stage stage=(Stage)((Node)even.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Devices List");
+        stage.show();
         }
         catch(Exception e){
             System.out.println(e.toString());

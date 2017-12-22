@@ -34,6 +34,6 @@
          </font>
       </Label>
       <AnchorPane fx:id="root" layoutX="116.0" layoutY="613.0" prefHeight="74.0" prefWidth="412.0" stylesheets="@main.css" />
-      <JFXButton buttonType="RAISED" layoutX="453.0" layoutY="547.0" prefHeight="44.0" prefWidth="149.0" ripplerFill="#6d15c5" style="-fx-background-color: #42cdaf;" text="Machine Learning" textFill="WHITE" />
+      <JFXButton buttonType="RAISED" layoutX="453.0" layoutY="547.0" onAction="#open" prefHeight="44.0" prefWidth="149.0" ripplerFill="#6d15c5" style="-fx-background-color: #42cdaf;" text="Machine Learning" textFill="WHITE" />
    </children>
 </AnchorPane>
