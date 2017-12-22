@@ -1,18 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="615.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.MainwindowController">
+<AnchorPane id="AnchorPane" prefHeight="615.0" prefWidth="622.0" style="-fx-background-color: #FFF;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.MainwindowController">
    <children>
-      <TableView fx:id="alldevstable" layoutX="17.0" layoutY="117.0" prefHeight="360.0" prefWidth="589.0">
+      <ImageView fitHeight="188.0" fitWidth="224.0" layoutX="218.0" layoutY="-38.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@shark-attack-2.png" />
+         </image>
+      </ImageView>
+      <TableView fx:id="alldevstable" layoutX="18.0" layoutY="157.0" prefHeight="360.0" prefWidth="589.0">
         <columns>
-          <TableColumn fx:id="interfaces" minWidth="200.0" prefWidth="588.0" text="Interface" />
+          <TableColumn fx:id="interfaces" minWidth="200.0" prefWidth="588.0" text="Interfaces" />
         </columns>
       </TableView>
-      <JFXButton fx:id="captureID" layoutX="157.0" layoutY="518.0" onAction="#capture" prefHeight="44.0" prefWidth="121.0" text="Capture" />
-      <JFXButton layoutX="342.0" layoutY="518.0" prefHeight="44.0" onAction="#refresh" prefWidth="121.0" text="Refresh" />
+      <JFXButton fx:id="captureID" layoutX="157.0" layoutY="549.0" onAction="#capture" prefHeight="44.0" prefWidth="121.0" style="-fx-background-color: #FFF;" text="Capture" textFill="#6876d9" />
+      <JFXButton layoutX="342.0" layoutY="549.0" onAction="#refresh" prefHeight="44.0" prefWidth="121.0" style="-fx-background-color: #FFF;" text="Refresh" textFill="#6876d9" />
+      <Label layoutX="319.0" layoutY="106.0" text="Shark" textFill="#42cdaf">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="216.0" layoutY="106.0" text="Packet" textFill="#6876d9">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

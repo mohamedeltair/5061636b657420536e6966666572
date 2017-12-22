@@ -1,0 +1,70 @@
+.jfx-snackbar-content{
+    -fx-background-color: #4059a9;
+}
+.jfx-snackbar-toast{
+    -fx-text-fill:#d3cd55;
+}
+.jfx-snackbar-action{
+    -fx-text-fill: #e63e3e;
+}
+.jfx-list-cell:selected{
+        -fx-background-color: #3d8c91;
+}
+.jfx-list-cell:hover{
+        -fx-background-color: #1bd79c;
+}
+.jfx-list-cell{
+        -fx-background-insets: 0.0;
+}
+.jfx-list-cell .jfx-rippler{
+    -fx-background-rippler:BLUE;
+}
+.jfx-list-view{
+    -fx-background-insets:0;
+    -fx-cell-vertical-margin:10.0;
+    -fx-vertical-gap:10;
+    -fx-pref-width:150;
+}
+.pane{
+    -fx-background-color: #333;
+}
+#field{
+    -fx-text-inner-color: #a0a2ab; 
+    -fx-prompt-text-fill: #a0a2ab;
+}
+#background{
+    -fx-background-color: #000;
+}
+.undecorator-background {
+  -fx-fill: radial-gradient(focus-angle 45deg, focus-distance 20%, center 25% 25%, radius 50%, reflect, #eeeeee88, #55555588 75%, dimgray);
+  -fx-arc-width:25;
+  -fx-arc-height:25;
+}
+.decoration-background{
+-fx-fill: radial-gradient(focus-angle 45deg, focus-distance 20%, center 25% 25%, radius 50%, reflect, #eeeeee88, #aaaaaa88 75%, gray);
+-fx-stroke-width: 0;
+-fx-arc-width:20px;
+-fx-arc-height:20px;
+}
+/*
+Defines the rectangle responsible for the shadow
+*/
+.decoration-shadow{
+-fx-fill: black;
+-fx-stroke-width: 0;
+-fx-arc-width:20px;
+-fx-arc-height:20px;
+}
+
+/*.label{
+    -fx-background-color: wheat;
+}*/
+.jfx-snackbar-content {
+    -fx-background-color: #323232;
+}
+.jfx-snackbar-toast {
+    -fx-text-fill: WHITE;   
+}
+.jfx-snackbar-action {
+    -fx-text-fill: #ff4081; 
+}

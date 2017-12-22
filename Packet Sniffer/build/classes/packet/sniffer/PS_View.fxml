@@ -10,23 +10,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="MainWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.Main_Controller">
+<AnchorPane id="MainWindow" minHeight="-Infinity" minWidth="-Infinity" prefHeight="706.0" prefWidth="1068.0" style="-fx-background-color: #464f6d;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="packet.sniffer.Main_Controller">
    <children>
-      <MenuBar layoutX="-4.0" layoutY="-1.0" prefHeight="30.0" prefWidth="1074.0" AnchorPane.bottomAnchor="677.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="-1.0">
+      <MenuBar layoutX="-4.0" layoutY="-1.0" prefHeight="25.0" prefWidth="1074.0" style="-fx-background-color: #a0a2ab;" AnchorPane.bottomAnchor="680.0" AnchorPane.leftAnchor="-4.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="-1.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
               <MenuItem mnemonicParsing="false" text="Export as PDF" />
+                  <MenuItem mnemonicParsing="false" onAction="#Save" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#Load" text="Load" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Capture">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#showInterfacesWindow" text="Interfaces..." />
                   <MenuItem mnemonicParsing="false" onAction="#Stop" text="Stop" />
-                  <MenuItem mnemonicParsing="false" onAction="#Save" text="Save" />
-                  <MenuItem mnemonicParsing="false" onAction="#Load" text="Load" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="About" />
@@ -163,6 +165,11 @@
           </TitledPane>
         </panes>
       </Accordion>
-      <JFXTextField fx:id="filter" layoutX="9.0" layoutY="32.0" maxWidth="306.0" minWidth="306.0" prefHeight="30.0" prefWidth="306.0" promptText="Filter" />
+      <JFXTextField id="field" fx:id="filter" focusColor="#a0a2ab" layoutX="40.0" layoutY="32.0" maxWidth="306.0" minWidth="306.0" prefHeight="30.0" prefWidth="306.0" promptText="Filter" stylesheets="@main.css" />
+      <ImageView fitHeight="27.0" fitWidth="25.0" layoutX="21.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@funnel-2.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
