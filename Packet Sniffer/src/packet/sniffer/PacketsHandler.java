@@ -29,6 +29,7 @@ public class PacketsHandler extends Thread {
     List<PcapIf> alldevs;  
     StringBuilder errbuf; 
     public static Pcap pcap;
+    
     Main_Controller d;
     int count=1;
     static ArrayList<PcapPacket> packets = new ArrayList();
@@ -52,15 +53,14 @@ public class PacketsHandler extends Thread {
                 + errbuf.toString());  
             return;  
         }  
-        String ofile = "tmp-capture-file.pcap";  
-       
-        PcapDumper dumper = pcap.dumpOpen(ofile);
-     
+           
         PcapPacketHandler<String> jpacketHandler = new PcapPacketHandler<String>() {  
   
+            
+             
             public void nextPacket(PcapPacket packet, String user) {  
                 try {
-                    dumper.dump(packet.getCaptureHeader(),packet);
+                
                     System.out.printf("Received packet at %s caplen=%-4d len=%-4d %s\n",  
                         new Date(packet.getCaptureHeader().timestampInMillis()),   
                         packet.getCaptureHeader().caplen(),  
@@ -111,6 +111,6 @@ public class PacketsHandler extends Thread {
             }  
         };  
         pcap.loop(Pcap.LOOP_INFINITE, jpacketHandler, "");   
-        pcap.close();
+       
     }
 }

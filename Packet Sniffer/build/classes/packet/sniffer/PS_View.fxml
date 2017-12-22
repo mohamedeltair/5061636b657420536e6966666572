@@ -25,6 +25,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#showInterfacesWindow" text="Interfaces..." />
                   <MenuItem mnemonicParsing="false" onAction="#Stop" text="Stop" />
+                  <MenuItem mnemonicParsing="false" onAction="#Save" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#Load" text="Load" />
             </items>
           </Menu>

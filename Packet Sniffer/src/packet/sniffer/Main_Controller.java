@@ -36,6 +36,7 @@ import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.protocol.lan.Ethernet;
 import org.jnetpcap.protocol.network.Ip4;
 import org.jnetpcap.protocol.network.*;
+import static packet.sniffer.PacketsHandler.pcap;
 
 public class Main_Controller implements Initializable {  
     ObservableList<Packet> pcks=FXCollections.observableArrayList();
@@ -121,9 +122,20 @@ public class Main_Controller implements Initializable {
     
      public void Stop()
     {
-        if(!stopBtnIsClicked) PacketsHandler.pcap.breakloop();
+        if(!stopBtnIsClicked) pcap.breakloop();
         stopBtnIsClicked = true;
     }
+     
+     public void Save()
+     {
+         String ofile = "tmp-capture-file.pcap";  
+           PcapDumper dumper = pcap.dumpOpen(ofile);
+       
+        for(int i =0; i<PacketsHandler.packets.size(); i++)
+        {
+                dumper.dump(PacketsHandler.packets.get(i).getCaptureHeader(),PacketsHandler.packets.get(i));
+        }   
+     }
     
     public void Load() {
           stopBtnIsClicked = true;
