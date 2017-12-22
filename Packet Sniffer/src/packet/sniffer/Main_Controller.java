@@ -148,10 +148,12 @@ public class Main_Controller implements Initializable {
         } catch (IOException ex) {
             System.out.println("save exception");
         }
+        catch(Exception e){}
      }
     
     public void Load() {
-          stopBtnIsClicked = true;
+        try{
+            stopBtnIsClicked = true;
           pcks.clear();
         
         FileChooser fc = new FileChooser();
@@ -242,6 +244,9 @@ StringBuilder errbuf = new StringBuilder();
         
 }
 
+        }
+        catch (Exception e){}
+          
     }
      
  
