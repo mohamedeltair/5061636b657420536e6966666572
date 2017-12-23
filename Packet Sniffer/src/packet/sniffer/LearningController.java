@@ -183,14 +183,12 @@ public class LearningController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         try{
-            Stage stage=(Stage)result.getScene().getWindow();
-            stage.close();
-            Stage window = new Stage();
-            window.setTitle("Devices List");
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow1.fxml"));
-            Scene interfacesView = new Scene(root);
-            window.setScene(interfacesView);
-            window.show();
+        Scene scene = new Scene(root);
+        Stage stage=(Stage)result.getScene().getWindow();
+        stage.setScene(scene);
+        stage.setTitle("Devices List");
+        stage.show();
         }
         catch(Exception e){
             System.out.println(e.toString());
