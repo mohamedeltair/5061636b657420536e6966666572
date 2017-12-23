@@ -153,9 +153,6 @@ public class Main_Controller implements Initializable {
     
     public void Load() {
         try{
-            stopBtnIsClicked = true;
-          pcks.clear();
-          PacketsHandler.packets.clear();
           
         FileChooser fc = new FileChooser();
        fc.setTitle("Select pcap file");
@@ -163,6 +160,9 @@ public class Main_Controller implements Initializable {
         File selectedFile = fc.showOpenDialog(null);
         String fileName = selectedFile.getAbsolutePath();
 if (selectedFile != null) {
+            stopBtnIsClicked = true;
+          pcks.clear();
+          PacketsHandler.packets.clear();
     
 StringBuilder errbuf = new StringBuilder();  
     Pcap pcap = Pcap.openOffline(fileName,errbuf);
